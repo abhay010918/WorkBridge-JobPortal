@@ -26,6 +26,9 @@ public class Job {
     private String description;
 
     @Column(nullable = false)
+    private String category; // IT, Finance, Healthcare, etc.
+
+    @Column(nullable = false)
     private String company;
 
     @Column(nullable = false)
@@ -38,10 +41,15 @@ public class Job {
     @JoinColumn(name = "employer_id", nullable = false)
     private AppUser employer; // The employer who posted the job
 
+    @ManyToOne
+    @JoinColumn(name = "recruiter_id", nullable = false)
+    private AppUser recruiter; // The employer posting the job
+
     @OneToMany(mappedBy = "job", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore // 🔹 Prevent infinite loop
     private List<Application> applications;
 
     @Column(nullable = false)
     private LocalDateTime postedAt = LocalDateTime.now();
+
 }
