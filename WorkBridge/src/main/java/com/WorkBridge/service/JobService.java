@@ -1,6 +1,8 @@
 package com.WorkBridge.service;
 
+import com.WorkBridge.entity.AppUser;
 import com.WorkBridge.entity.Job;
+import com.WorkBridge.repository.AppUserRepository;
 import com.WorkBridge.repository.JobRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +13,18 @@ import java.util.Optional;
 public class JobService {
 
     private final JobRepository jobRepository;
+    private final AppUserRepository userRepository;
 
-    public JobService(JobRepository jobRepository) {
+    public JobService(JobRepository jobRepository, AppUserRepository userRepository) {
         this.jobRepository = jobRepository;
+        this.userRepository = userRepository;
     }
 
-    public Job postJob(Job job) {
+    public Job postJob(Job job, Long recruiterId) {
+        AppUser recruiter = userRepository.findById(recruiterId)
+                .orElseThrow(() -> new RuntimeException("Recruiter not found"));
+
+        job.setRecruiter(recruiter); // 🔹 Set recruiter before saving
         return jobRepository.save(job);
     }
 

@@ -1,5 +1,6 @@
 package com.WorkBridge.controller;
 
+import com.WorkBridge.dto.JobRequest;
 import com.WorkBridge.entity.Job;
 import com.WorkBridge.service.JobService;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,17 @@ public class JobController {
     }
 
     @PostMapping("/post")
-    public ResponseEntity<Job> postJob(@RequestBody Job job) {
-        return ResponseEntity.ok(jobService.postJob(job));
+    public ResponseEntity<Job> postJob(@RequestBody JobRequest jobRequest) {
+        Job job = new Job();
+        job.setTitle(jobRequest.getTitle());
+        job.setDescription(jobRequest.getDescription());
+        job.setCategory(jobRequest.getCategory());
+        job.setCompany(jobRequest.getCompany());
+        job.setLocation(jobRequest.getLocation());
+        job.setSalary(jobRequest.getSalary());
+
+        Job savedJob = jobService.postJob(job, jobRequest.getRecruiterId()); // 🔹 Pass recruiterId
+        return ResponseEntity.ok(savedJob);
     }
 
     @GetMapping

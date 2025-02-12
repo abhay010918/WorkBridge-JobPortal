@@ -28,6 +28,13 @@ public class AuthController {
         return ResponseEntity.ok( authService.register(request));
     }
 
+    @PostMapping("/register/recruiter")
+    public ResponseEntity<String> RecruiterRegister(
+            @RequestBody RegisterRequest request
+    ){
+        return ResponseEntity.ok( authService.RecruiterRegister(request));
+    }
+
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(
             @RequestBody AuthRequest request

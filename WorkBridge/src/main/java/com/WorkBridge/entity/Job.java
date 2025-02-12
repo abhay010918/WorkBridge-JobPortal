@@ -38,10 +38,6 @@ public class Job {
     private BigDecimal salary;
 
     @ManyToOne
-    @JoinColumn(name = "employer_id", nullable = false)
-    private AppUser employer; // The employer who posted the job
-
-    @ManyToOne
     @JoinColumn(name = "recruiter_id", nullable = false)
     private AppUser recruiter; // The employer posting the job
 

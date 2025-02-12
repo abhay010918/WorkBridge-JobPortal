@@ -37,7 +37,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**","/applications/**").permitAll() // Allow login and register
+                        .requestMatchers("/auth/**","/applications/**","/jobs/**").permitAll() // Allow login and register
                         .anyRequest().authenticated() // Protect all other endpoints
                 )
                 .addFilterBefore(new JwtFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);

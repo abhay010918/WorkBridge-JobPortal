@@ -43,6 +43,23 @@ public class AuthService {
         return "User Registered successfully ";
     }
 
+    public String RecruiterRegister(RegisterRequest request) {
+        Optional<AppUser> users = userRepository.findByEmail(request.getEmail());
+        if (users.isPresent()) {
+            throw new RuntimeException("Recruiter already exists with this email.");
+        }
+
+        AppUser user = new AppUser();
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword())); // ✅ Encode password
+        user.setRole(Role.RECRUITER);
+
+        userRepository.save(user);
+        return "Recruiter Registered successfully ";
+    }
+
+
     public AuthResponse login(AuthRequest request) {
         AppUser user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));

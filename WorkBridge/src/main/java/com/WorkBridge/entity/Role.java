@@ -2,7 +2,7 @@ package com.WorkBridge.entity;
 
 public enum Role {
     ADMIN,
-    EMPLOYER,
+    RECRUITER,
     JOB_SEEKER,
     USER
 }
